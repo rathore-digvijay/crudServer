@@ -6,8 +6,29 @@
  */
 const express = require('express');
 const authHandler = require('./backendHandlers/authHandler.js');
+const fileHandler = require('./backendHandlers/configFileHandler.js');
 
 const router = express.Router();
+
+/**
+ * This method is created here so that it can be used as middleware function.
+ * This method verify the auth token if verified calls next function, if not then pass
+ * failure reponse accordingly.
+ * @author Digvijay Rathore
+ * @param {Object} req Request Object
+ * @param {Object} res Response Object instance
+ * @param {Function} next Callabck function
+ */
+async function authMiddleware(req, res, next) {
+    const tokenCheckData = await authHandler.verifyToken(req);
+
+    if (tokenCheckData.success) {
+        req.user = tokenCheckData.user;
+        return next();
+    }
+    return res.sendStatus(tokenCheckData.statusCode);
+}
+
 
 // Home API
 router.get('/', (req, res) => {
@@ -16,6 +37,10 @@ router.get('/', (req, res) => {
 
 router.post('/getAuthToken', (req, res) => {
     authHandler.entry(req, res);
+});
+
+router.post('/createConfigFile', authMiddleware, (req, res) => {
+    fileHandler.createConfigFile(req, res);
 });
 
 module.exports = router;

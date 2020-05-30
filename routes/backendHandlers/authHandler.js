@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 function generateAuthToken(user) {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || '1234567890';
     return new Promise((resolve, reject) => {
-        jwt.sign(user, accessTokenSecret, { expiresIn: '10s' }, (err, accessToken) => {
+        jwt.sign(user, accessTokenSecret, { expiresIn: '1h' }, (err, accessToken) => {
             if (err) {
                 // 'Error while generating accessToken'
                 const errCode = 500;
@@ -52,6 +52,26 @@ const entry = async (req, res) => {
 };
 
 
+/**
+ * The method verify the authToken coming in the request and sends the reponse accordingly.
+ * @author Digvijay Rathore
+ * @param {Object} req Request object from user
+ */
+function verifyToken(req) {
+    const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || '1234567890';
+    return new Promise((resolve) => {
+        const token = req.headers.authorization;
+        // const token = authHeader && authHeader.split(' ')[1];
+        if (token == null) return resolve({ success: false, statusCode: 401 });
+        jwt.verify(token, accessTokenSecret, (err, user) => {
+            console.log(err);
+            if (err) return resolve({ success: false, statusCode: 403 });
+            return resolve({ success: true, user });
+        });
+    });
+}
+
 module.exports = {
     entry,
+    verifyToken,
 };

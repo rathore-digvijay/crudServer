@@ -7,3 +7,16 @@ POST http://localhost:3000/getAuthToken HTTP/1.1
 Content-Type: application/json
 
 {"Username" : "admin", "Password" : "admin"}
+
+########
+
+POST http://localhost:3000/createConfigFile HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTU5MDgzMTQxOCwiZXhwIjoxNTkwODM1MDE4fQ.CAZ-gDALZoqbXcWv-bvdhzY0NCP3rvO2SRvDgyToJxc
+
+{
+  "address": "smtp.gmail.com",
+  "username": "example@gmail.com",
+  "password": "mysecretpassword",
+  "port": 465
+}
