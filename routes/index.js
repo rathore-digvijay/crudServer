@@ -50,5 +50,12 @@ router.get('/readConfigFile', authMiddleware, (req, res) => {
     fileHandler.getFileDetails(req, res);
 });
 
+router.put('/updateConfigFile', authMiddleware, (req, res) => {
+
+});
+
+router.delete('/deleteConfigFile', authMiddleware, (req, res) => {
+    fileHandler.deleteConfigFile(req, res);
+});
 
 module.exports = router;

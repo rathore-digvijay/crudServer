@@ -25,3 +25,9 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFkbWluIiwi
 
 GET http://localhost:3000/readConfigFile HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTU5MDgzMTQxOCwiZXhwIjoxNTkwODM1MDE4fQ.CAZ-gDALZoqbXcWv-bvdhzY0NCP3rvO2SRvDgyToJxc
+
+
+####
+
+DELETE http://localhost:3000/deleteConfigFile HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTU5MDgzMTQxOCwiZXhwIjoxNTkwODM1MDE4fQ.CAZ-gDALZoqbXcWv-bvdhzY0NCP3rvO2SRvDgyToJxc

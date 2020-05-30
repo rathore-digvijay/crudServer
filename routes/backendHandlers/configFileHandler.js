@@ -92,7 +92,34 @@ const getFileDetails = async (req, res) => {
     }
 };
 
+function deleteFile() {
+    return new Promise((resolve, reject) => {
+        fs.unlink(path, (err) => {
+            if (err) {
+                const errCode2 = 500;
+                reject(errCode2);
+            }
+            console.log('path/file.txt was deleted');
+            resolve('Deleted Successfully');
+        });
+    });
+}
+
+const deleteConfigFile = async (req, res) => {
+    try {
+        const fileExist = await checkFileExist();
+        if (!fileExist) {
+            return res.status(404).send({ success: true, info: 'Already deleted' });
+        }
+        await deleteFile();
+        res.status(204).send({ success: true, info: 'Successfully Deleted' });
+    } catch (error) {
+        res.sendStatus(error);
+    }
+};
+
 module.exports = {
     createConfigFile,
     getFileDetails,
+    deleteConfigFile,
 };
