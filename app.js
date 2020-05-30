@@ -6,15 +6,14 @@
  */
 
 const express = require('express');
-
-const app = express();
+const bodyParser = require('body-parser');
+const normalRouter = require('./routes/index.js');
 
 const port = 3000;
 
-
-app.get('/', (req, res) => {
-    res.json({ success: true, info: 'Server started successfully' });
-});
+const app = express();
+app.use(bodyParser.json());
+app.use('/', normalRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
