@@ -7,9 +7,13 @@
 
 const fs = require('fs');
 
-
 const path = './config.json';
 
+/**
+ * This method checks the file exist or not.
+ * If exist return a promise with resolve true otherwise false.
+ * @returns promise
+ */
 function checkFileExist() {
     return new Promise((resolve, reject) => {
         try {
@@ -28,6 +32,10 @@ function checkFileExist() {
     });
 }
 
+/**
+ * This method create the file with the data specified.
+ * @param {Object} params object containing values from client request
+ */
 function createFile(params) {
     const {
         address, username, password, port,
@@ -53,6 +61,11 @@ function createFile(params) {
     });
 }
 
+/**
+ * This method is handler function of Create config file API.
+ * @param {Object} req request object of request
+ * @param {Object} res Response object
+ */
 const createConfigFile = async (req, res) => {
     try {
         const fileExist = await checkFileExist();
@@ -66,6 +79,10 @@ const createConfigFile = async (req, res) => {
     }
 };
 
+/**
+ * This method reads the file using read file method of fs module, which returns buffer then
+ * it get converted to raw data and sent.
+ */
 function getFileContent() {
     return new Promise((resolve, reject) => {
         fs.readFile(path, (err, dataBuffer) => {
@@ -81,6 +98,11 @@ function getFileContent() {
     });
 }
 
+/**
+ * The method is hander function of Read config File API
+ * @param {Object} req Request obejct
+ * @param {Object} res Response object
+ */
 const getFileDetails = async (req, res) => {
     try {
         const fileExist = await checkFileExist();
@@ -94,6 +116,9 @@ const getFileDetails = async (req, res) => {
     }
 };
 
+/**
+ * This method delete the config file using unlink method of fs.
+ */
 function deleteFile() {
     return new Promise((resolve, reject) => {
         fs.unlink(path, (err) => {
@@ -107,6 +132,11 @@ function deleteFile() {
     });
 }
 
+/**
+ * This method is handler function of delete file API.
+ * @param {Object} req Request Object
+ * @param {Object} res response Object
+ */
 const deleteConfigFile = async (req, res) => {
     try {
         const fileExist = await checkFileExist();
@@ -120,6 +150,11 @@ const deleteConfigFile = async (req, res) => {
     }
 };
 
+/**
+ * This method updates the values of config file as passed in the parameter.
+ * It iterates over the object and update the value of key and then write to the file.
+ * @param {Object} params Object containig request keys to update file
+ */
 function updateFileContent(params) {
     const configFile = require('../../config.json');
 
@@ -140,6 +175,11 @@ function updateFileContent(params) {
     });
 }
 
+/**
+ * This method is handler function of the update config file API
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ */
 const updateConfigFile = async (req, res) => {
     try {
         const fileExist = await checkFileExist();

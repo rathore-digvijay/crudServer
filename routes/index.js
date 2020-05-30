@@ -50,10 +50,12 @@ router.get('/readConfigFile', authMiddleware, (req, res) => {
     fileHandler.getFileDetails(req, res);
 });
 
+// Update File API
 router.put('/updateConfigFile', authMiddleware, (req, res) => {
     fileHandler.updateConfigFile(req, res);
 });
 
+// Delete File API
 router.delete('/deleteConfigFile', authMiddleware, (req, res) => {
     fileHandler.deleteConfigFile(req, res);
 });
