@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 
+
 const path = './config.json';
 
 function checkFileExist() {
@@ -40,7 +41,8 @@ function createFile(params) {
         const data = {
             address, username, password, port,
         };
-        const dataToWrite = JSON.stringify(data);
+        // (null, 2) indent the json file created
+        const dataToWrite = JSON.stringify(data, null, 2);
         fs.writeFile(path, dataToWrite, (err) => {
             if (err) {
                 const errCode2 = 500;
@@ -118,8 +120,43 @@ const deleteConfigFile = async (req, res) => {
     }
 };
 
+function updateFileContent(params) {
+    const configFile = require('../../config.json');
+
+    return new Promise((resolve, reject) => {
+        Object.entries(params).forEach((entry) => {
+            configFile[entry[0]] = entry[1];
+        });
+        console.log('configFile');
+        console.log(configFile);
+        fs.writeFile(path, JSON.stringify(configFile, null, 2), (err) => {
+            if (err) {
+                const errCode = 500;
+                reject(errCode);
+            }
+            console.log(`writing to ${path}`);
+            resolve('File updated');
+        });
+    });
+}
+
+const updateConfigFile = async (req, res) => {
+    try {
+        const fileExist = await checkFileExist();
+        if (!fileExist) {
+            return res.sendStatus(404);
+        }
+        await updateFileContent(req.body);
+        res.sendStatus(204);
+    } catch (error) {
+        const errCode = error || 500;
+        res.sendStatus(errCode);
+    }
+};
+
 module.exports = {
     createConfigFile,
     getFileDetails,
     deleteConfigFile,
+    updateConfigFile,
 };

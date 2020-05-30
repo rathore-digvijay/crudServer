@@ -51,7 +51,7 @@ router.get('/readConfigFile', authMiddleware, (req, res) => {
 });
 
 router.put('/updateConfigFile', authMiddleware, (req, res) => {
-
+    fileHandler.updateConfigFile(req, res);
 });
 
 router.delete('/deleteConfigFile', authMiddleware, (req, res) => {
