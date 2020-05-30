@@ -62,7 +62,7 @@ const createConfigFile = async (req, res) => {
         await createFile(req.body);
         return res.status(201).send({ success: true, info: 'File Created' });
     } catch (error) {
-        res.sendStatus(error);
+        return res.sendStatus(error);
     }
 };
 
@@ -90,7 +90,7 @@ const getFileDetails = async (req, res) => {
         const fileContent = await getFileContent();
         return res.status(200).send({ success: true, fileContent });
     } catch (error) {
-        res.sendStatus(error);
+        return res.sendStatus(error);
     }
 };
 
@@ -114,9 +114,9 @@ const deleteConfigFile = async (req, res) => {
             return res.status(404).send({ success: true, info: 'Already deleted' });
         }
         await deleteFile();
-        res.status(204).send({ success: true, info: 'Successfully Deleted' });
+        return res.status(204).send({ success: true, info: 'Successfully Deleted' });
     } catch (error) {
-        res.sendStatus(error);
+        return res.sendStatus(error);
     }
 };
 
@@ -147,10 +147,10 @@ const updateConfigFile = async (req, res) => {
             return res.sendStatus(404);
         }
         await updateFileContent(req.body);
-        res.sendStatus(204);
+        return res.sendStatus(204);
     } catch (error) {
         const errCode = error || 500;
-        res.sendStatus(errCode);
+        return res.sendStatus(errCode);
     }
 };
 

@@ -47,7 +47,7 @@ const entry = async (req, res) => {
         return res.json({ success: true, authToken });
     } catch (error) {
         console.log('error occurred');
-        res.sendStatus(error);
+        return res.sendStatus(error);
     }
 };
 
