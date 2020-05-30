@@ -35,12 +35,20 @@ router.get('/', (req, res) => {
     res.json({ success: true, info: 'Server started successfully' });
 });
 
+// Auth API
 router.post('/getAuthToken', (req, res) => {
     authHandler.entry(req, res);
 });
 
+// Create File API
 router.post('/createConfigFile', authMiddleware, (req, res) => {
     fileHandler.createConfigFile(req, res);
 });
+
+// Read File API
+router.get('/readConfigFile', authMiddleware, (req, res) => {
+    fileHandler.getFileDetails(req, res);
+});
+
 
 module.exports = router;

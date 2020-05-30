@@ -64,7 +64,35 @@ const createConfigFile = async (req, res) => {
     }
 };
 
+function getFileContent() {
+    return new Promise((resolve, reject) => {
+        fs.readFile(path, (err, dataBuffer) => {
+            if (err) {
+                const errCode2 = 500;
+                reject(errCode2);
+            }
+            console.log('file data ');
+            const data = JSON.parse(dataBuffer.toString());
+            console.log(data);
+            resolve(data);
+        });
+    });
+}
+
+const getFileDetails = async (req, res) => {
+    try {
+        const fileExist = await checkFileExist();
+        if (!fileExist) {
+            return res.sendStatus(404);
+        }
+        const fileContent = await getFileContent();
+        return res.status(200).send({ success: true, fileContent });
+    } catch (error) {
+        res.sendStatus(error);
+    }
+};
 
 module.exports = {
     createConfigFile,
+    getFileDetails,
 };
